@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th= "http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Welcome</h1>
+<!-- 
+  <p th:text = "${msg}"></p> 
+ -->
+ <div th:object="${emp}"> 
+ <p th:text="${emp.name}"></p>
+ <p th:text="${emp.role}"></p>
+ <p th:text="${emp.email}"></p>
+ <p th:text="${emp.mob}"></p>
+ </div>
+</body>
+</html>
