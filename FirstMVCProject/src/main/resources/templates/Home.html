@@ -9,11 +9,34 @@
 <!-- 
   <p th:text = "${msg}"></p> 
  -->
- <div th:object="${emp}"> 
+<!--  <div th:object="${emp}"> 
  <p th:text="${emp.name}"></p>
  <p th:text="${emp.role}"></p>
  <p th:text="${emp.email}"></p>
  <p th:text="${emp.mob}"></p>
+ </div> -->
+<a th:href="@{/register1}">stop</a>
+<!--  
+ <div th:object="${emp}"> 
+ <p th:text="*{name}"></p>
+ <p th:text="*{role}"></p>
+ <p th:text="*{email}"></p>
+ <p th:text="*{mob}"></p> 
  </div>
+ -->
+ <table>
+ 	<tr> 
+ 		<th>name</th>
+ 		<th>email</th>
+ 		<th>roll</th>
+ 		<th>mob</th>
+ 	</tr>
+ 	<tr th:each="e:${employees}">
+ 		<td th:text="${e.name}"></td>
+ 		<td th:text="${e.email}"></td>
+ 		<td th:text="${e.mob}"></td>
+ 		<td th:text="${e.role}"></td>
+ 	</tr>
+ </table>
 </body>
 </html>
