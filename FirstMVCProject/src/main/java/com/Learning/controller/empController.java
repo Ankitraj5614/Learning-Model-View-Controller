@@ -29,10 +29,24 @@ public class empController {
 			    new Employee("Amit Kumar", "amit.kumar@gmail.com", "QA Engineer", "9876543214")
 			);
 		model.addAttribute("employees", employees);
+		model.addAttribute("emp",  new Employee("Rohit", "rohit.kumar@gmail.com", "admin", "987654877"));
 		return "home";
 	}
 	@GetMapping("/register1")
 	public String registerPage() {
 		return "register";
+	}
+	
+	@GetMapping("/about")
+	public String aboutUs() {
+		return "about";
+	}
+	@GetMapping("/contact")
+	public String contactUs() {
+		return "contact";
+	}
+	@GetMapping("/prod")
+	public String product() {
+		return "prod";
 	}
 }
