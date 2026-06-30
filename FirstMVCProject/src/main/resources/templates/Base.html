@@ -16,6 +16,13 @@
 				</ul>
 			</nav>
 	</div>
+	
+	<div th:fragment="welcome(name)">
+		<p>
+			hello, <span th:text="${name}"></span>
+		</p>
+	</div>
+	
 	<div th:fragment="foot">
 		<h1>Footer....</h1>
 	 </div>

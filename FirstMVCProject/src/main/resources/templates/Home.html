@@ -5,7 +5,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div th:replace="~{Base::myNav}"></div>
+	<!-- //Fragment 
+ 						htmlfileName::name of Fragement -->
+			<div th:replace="~{Base::myNav}"></div>
 <h1>Welcome</h1>
 
 <!-- 
@@ -94,6 +96,10 @@
  		<p th:case="'admin'">Admin Dashboad</p>
  		<p th:case="*">Guest Dashboad</p>
  	</div>
+ 	<!-- //Fragment 
+ 						htmlfileName::name of Fragement -->
+ 	 	<div th:replace="~{Base::welcome('Ankit Raj')}"></div>
+ 	
  	<div th:replace="~{Base::foot}"></div>
 </body>
 </html>
