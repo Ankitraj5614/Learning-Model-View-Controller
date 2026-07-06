@@ -1,0 +1,140 @@
+@charset "UTF-8";
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f5f7fa;
+}
+
+.navbar{
+    position:fixed;
+    width:100%;
+    top:0;
+    left:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 8%;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+    z-index:1000;
+}
+
+.logo{
+    color:#fff;
+    font-size:28px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+}
+
+.logo i{
+    color:#00d9ff;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    list-style:none;
+    gap:30px;
+}
+
+.nav-links li a{
+    color:white;
+    text-decoration:none;
+    font-size:17px;
+    transition:.3s;
+    position:relative;
+}
+
+.nav-links li a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-6px;
+    width:0%;
+    height:3px;
+    background:#00d9ff;
+    transition:.4s;
+}
+
+.nav-links li a:hover::after{
+    width:100%;
+}
+
+.nav-links li a:hover{
+    color:#00d9ff;
+}
+
+.login-btn{
+    padding:10px 22px;
+    border:none;
+    border-radius:30px;
+    background:#00d9ff;
+    color:#000;
+    font-size:15px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.login-btn:hover{
+    background:white;
+    transform:translateY(-3px);
+}
+
+.menu-btn{
+    color:white;
+    font-size:26px;
+    display:none;
+    cursor:pointer;
+}
+
+.hero{
+    margin-top:120px;
+    text-align:center;
+    padding:120px 20px;
+}
+
+.hero h1{
+    font-size:55px;
+    color:#203a43;
+}
+
+.hero p{
+    margin-top:20px;
+    font-size:20px;
+    color:#666;
+}
+
+@media(max-width:768px){
+
+.nav-links{
+    position:absolute;
+    top:80px;
+    left:-100%;
+    width:100%;
+    background:#203a43;
+    flex-direction:column;
+    padding:30px;
+    transition:.4s;
+}
+
+.nav-links.active{
+    left:0;
+}
+
+.menu-btn{
+    display:block;
+}
+
+.login-btn{
+    width:100%;
+}
+}
