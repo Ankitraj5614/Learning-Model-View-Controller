@@ -1,5 +1,7 @@
 package com.Learning.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,10 +33,12 @@ public class UserController {
 	public String  saveData(@ModelAttribute User user) {
 		service.saveUser(user);
 		
-		return "redirect:/ViewAll";
+		return "redirect:/Alluser";
 	}
-	@GetMapping("/ViewAll")
-	public String showData() {
-		return "ViewAll";
+	@GetMapping("/Alluser")
+	public String showData(Model model) {
+		List< User> alluser = service.getAlluser();
+		model.addAttribute("userlist", alluser);
+		return "viewAll";
 	}
 }

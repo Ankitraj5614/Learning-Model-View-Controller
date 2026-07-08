@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html       
+ xmlns:th="http://www.thymeleaf.org" 
+ th:replace="~{baseui::mybaseLayout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<section>
+		<h1>Welcome View All</h1>
+		
+		<div >
+		<div class="container mt-4">
+
+    <div class="row">
+        <div class="col-md-6 offset-3">
+        	
+			<table class="table">
+  <thead>
+    <tr>
+      
+      <th scope="col">Name</th>
+      <th scope="col">email</th>
+     
+      <th scope="col">pan</th>
+      <th scope="col">address</th>
+      <th scope="col">aadhar</th>
+      <th scope="col">action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="u:${userlist}">
+
+     
+      <td th:text="${u.name}">Mark</td>
+      <td th:text="${u.email}">Otto</td>
+    
+      <td th:text="${u.pan}">@mdo</td>
+      <td th:text="${u.address}">@mdo</td>
+      <td th:text="${u.aadhar}">@mdo</td>
+      <td><a class="btn btn-warning" th:href="@{/}">Edit</a>
+      <a   class="btn btn-danger" th:href="@{/}">Delete</a>
+      </td>
+     
+    </tr>
+   
+  </tbody>
+</table>
+        	
+        </div>
+        </div>
+        </div>
+				</div>
+	</section>
+
+</body>
+</html>
