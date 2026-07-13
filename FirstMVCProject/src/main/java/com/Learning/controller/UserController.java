@@ -7,13 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Learning.entities.User;
+import com.Learning.repo.userRepo;
 import com.Learning.serviceimpl.userServiceImpl;
 
 @Controller
 public class UserController {
+
+
 	@Autowired
 	userServiceImpl service;
 	
@@ -40,5 +45,24 @@ public class UserController {
 		List< User> alluser = service.getAlluser();
 		model.addAttribute("userlist", alluser);
 		return "viewAll";
+	}
+	
+//	@GetMapping("/editUser")
+//	public String editing (@RequestParam Long id) {
+//		System.out.println("the method is changed " +id);
+//		return "edit";
+//	}
+	@GetMapping("/editUser/{id}")
+	public String editing (@PathVariable Long id,Model model) {
+
+		model.addAttribute("user", service.getUser(id));
+		
+		return "edit";
+	}
+	
+	@GetMapping("/delete/{id}")
+	public String delete(@PathVariable Long id) {
+		service.delete(id);
+		return "redirect:/Alluser";
 	}
 }

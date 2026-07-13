@@ -40,8 +40,15 @@
       <td th:text="${u.pan}">@mdo</td>
       <td th:text="${u.address}">@mdo</td>
       <td th:text="${u.aadhar}">@mdo</td>
-      <td><a class="btn btn-warning" th:href="@{|/edituser?id=${u.id}|}">Edit</a>
-      <a   class="btn btn-danger" th:href="@{/}">Delete</a>
+<!--  query parameter approach    <td><a class="btn btn-warning"  th:href="@{/editUser(id=${u.id})}">edit</a> --> 
+  <!-- 2nd approach   <td><a class="btn btn-warning"  th:href="@{|/editUser?id=${u.id}|}">edit</a> -->
+<!-- 3rd approach  <td><a class="btn btn-warning"  th:href="@{'/editUser?id='+${u.id}|}">edit</a> --> 
+<!--  path varible  -->
+ <!-- <td> <a class="btn btn-warning"  th:href="@{/editUser/{id}(id=${u.id})|}">edit</a> --> 
+<!--  <td> <a class="btn btn-warning"  th:href="@{|/editUser/${u.id}|}">edit</a>  -->
+ <td> <a class="btn btn-warning"  th:href="@{'/editUser/' + ${u.id}}">edit</a>
+     
+      <a   class="btn btn-danger" th:href="@{'/delete/' + ${u.id}}">Delete</a>
       </td>
      
     </tr>
