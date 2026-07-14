@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.Learning.dto.userdto;
 import com.Learning.entities.User;
 import com.Learning.repo.userRepo;
 import com.Learning.serviceimpl.userServiceImpl;
@@ -30,13 +31,13 @@ public class UserController {
 	@GetMapping("/register")
 	public String showRegister(Model model) {
 		
-		model.addAttribute("user", new User());
+		model.addAttribute("user", new userdto());
 		return "register";
 	}
 	
 	@PostMapping("/save")
-	public String  saveData(@ModelAttribute User user) {
-		service.saveUser(user);
+	public String  saveData(@ModelAttribute userdto userdto) {
+		service.saveUser(userdto);
 		
 		return "redirect:/Alluser";
 	}
@@ -52,6 +53,7 @@ public class UserController {
 //		System.out.println("the method is changed " +id);
 //		return "edit";
 //	}
+	//to show edit page
 	@GetMapping("/editUser/{id}")
 	public String editing (@PathVariable Long id,Model model) {
 
@@ -63,6 +65,22 @@ public class UserController {
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable Long id) {
 		service.delete(id);
+		return "redirect:/Alluser";
+	}
+	@PostMapping("/update")
+	public String  updateData(@ModelAttribute userdto userdto) {
+		//to save Existing user in database
+		
+		User existingUser = service.getUser(userdto.getId());
+		if(existingUser!=null) {
+			existingUser.setAadhar(userdto.getAadhar());
+			existingUser.setName(userdto.getName());
+			existingUser.setAddress(userdto.getAddress());
+			existingUser.setPan(userdto.getPan());
+			service.saveUser(existingUser);
+		}
+		
+		
 		return "redirect:/Alluser";
 	}
 }
