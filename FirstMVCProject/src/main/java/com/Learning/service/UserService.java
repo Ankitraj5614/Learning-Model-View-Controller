@@ -4,15 +4,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.Learning.entities.User;
+import com.Learning.Dto.UserDto;
+
 
 @Service
 public interface UserService {
 		//to save data user
-	User saveUser(User user);
+	UserDto saveUser(UserDto user);
 	//to view all users
-	List<User> getAlluser();
+	List<UserDto> getAlluser();
 	
 	void delete(Long id);
-	User getUser(Long id);
+	UserDto getUser(Long id);
+	public UserDto updateUser(UserDto userdto);
 }

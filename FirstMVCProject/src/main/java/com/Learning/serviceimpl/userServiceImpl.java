@@ -1,10 +1,16 @@
 package com.Learning.serviceimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.Learning.Dto.UserDto;
+import com.Learning.config.AppConfig;
 
 import com.Learning.entities.User;
 import com.Learning.repo.userRepo;
@@ -13,24 +19,47 @@ import com.Learning.service.UserService;
 @Service
 public class userServiceImpl implements UserService {
 	@Autowired
-	userRepo repo;
+	private userRepo repo;
+	
+	@Autowired
+	private ModelMapper mapper;
 	@Override
-	public User saveUser(User user) {
+	public UserDto saveUser(UserDto userDto) {
 		
-		return repo.save(user);
+			User user =mapper.map(userDto, User.class);
+		
+		User saveUser =repo.save(user);
+		
+		UserDto dto=mapper.map(saveUser, UserDto.class);
+		
+		return dto;
 	}
 
 	@Override
-	public List<User> getAlluser() {
+	public List<UserDto> getAlluser() {
+		
 		List<User> list = repo.findAll();
-		return list;
+		//Two Way
+		
+
+		List<UserDto> UDtoList = list.stream()
+		        .map(entity -> mapper.map(entity, UserDto.class))
+		        .collect(Collectors.toList());
+		//One Way
+//		List<UserDto> UDtoList = new ArrayList<>();
+//		for(User user:list)
+//		UDtoList.add(UserMapper.convertUserDto(user));
+		return UDtoList;
 	}
 	
 	@Override
-	public User getUser(Long id) {
+	public UserDto getUser(Long id) {
+		
 		Optional<User> op= repo.findById(id);
+		
 		if (op.isPresent()) {
-			return op.get();
+			UserDto dto=mapper.map(op.get(), UserDto.class);
+			return dto;
 		}
 		return null;
 	}
@@ -39,6 +68,19 @@ public class userServiceImpl implements UserService {
 	public void delete(Long id) {
 		repo.deleteById(id);
 		
+	}
+
+	public UserDto updateUser(UserDto userdto) {
+		
+	User existingUser=repo.findById(userdto.getId()).orElse(null);
+	
+		existingUser.setAadhar(userdto.getAadhar());
+		existingUser.setName(userdto.getName());
+		existingUser.setAddress(userdto.getAddress());
+		existingUser.setPan(userdto.getPan());
+		User saveEntity=repo.save(existingUser);
+	
+		return mapper.map(saveEntity, UserDto.class);
 	}
 
 }

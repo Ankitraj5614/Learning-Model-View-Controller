@@ -28,7 +28,8 @@
       <th scope="col">address</th>
       <th scope="col">aadhar</th>
       <th scope="col">action</th>
-    </tr>
+
+   </tr>
   </thead>
   <tbody>
     <tr th:each="u:${userlist}">
@@ -55,12 +56,28 @@
    
   </tbody>
 </table>
+						<nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <a class="page-link">Previous</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item active">
+      <a class="page-link" href="#" aria-current="page">2</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>	
         	
         </div>
         </div>
-        </div>
+       </div>
 				</div>
-	</section>
+
+</section>
 
 </body>
 </html>

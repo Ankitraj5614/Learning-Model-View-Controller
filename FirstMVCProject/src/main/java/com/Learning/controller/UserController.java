@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.Learning.dto.userdto;
+import com.Learning.Dto.UserDto;
 import com.Learning.entities.User;
 import com.Learning.repo.userRepo;
 import com.Learning.serviceimpl.userServiceImpl;
@@ -28,22 +28,24 @@ public class UserController {
 		return "home";
 	}
 	
-	@GetMapping("/register")
-	public String showRegister(Model model) {
-		
-		model.addAttribute("user", new userdto());
-		return "register";
-	}
+//	@GetMapping("/register")
+//	public String showRegister(Model model) {
+//		
+//		model.addAttribute("user", new UserDto());
+//		return "register";
+//	}
+//	
 	
+	public String getAllData(Model model, @RequestParam Long id) {}
 	@PostMapping("/save")
-	public String  saveData(@ModelAttribute userdto userdto) {
+	public String  saveData(@ModelAttribute UserDto userdto) {
 		service.saveUser(userdto);
 		
 		return "redirect:/Alluser";
 	}
 	@GetMapping("/Alluser")
 	public String showData(Model model) {
-		List< User> alluser = service.getAlluser();
+		List<UserDto> alluser = service.getAlluser();
 		model.addAttribute("userlist", alluser);
 		return "viewAll";
 	}
@@ -68,17 +70,13 @@ public class UserController {
 		return "redirect:/Alluser";
 	}
 	@PostMapping("/update")
-	public String  updateData(@ModelAttribute userdto userdto) {
+	public String  updateData(@ModelAttribute UserDto userdto) {
 		//to save Existing user in database
 		
-		User existingUser = service.getUser(userdto.getId());
-		if(existingUser!=null) {
-			existingUser.setAadhar(userdto.getAadhar());
-			existingUser.setName(userdto.getName());
-			existingUser.setAddress(userdto.getAddress());
-			existingUser.setPan(userdto.getPan());
-			service.saveUser(existingUser);
-		}
+	
+		
+			service.updateUser(userdto);
+	
 		
 		
 		return "redirect:/Alluser";

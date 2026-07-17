@@ -1,7 +1,6 @@
-package com.Learning.dto;
+package com.Learning.Dto;
 
-
-public class userdto {
+public class UserDto {
 	private Long id;
 	private String name;
 	private String email;
@@ -9,6 +8,21 @@ public class userdto {
 	private String password;
 	private String aadhar;
 	private String pan;
+	
+	public UserDto(Long id, String name, String email, String address, String password, String aadhar, String pan) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.address = address;
+		this.password = password;
+		this.aadhar = aadhar;
+		this.pan = pan;
+	}
+	public UserDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	public Long getId() {
 		return id;
 	}
@@ -51,6 +65,5 @@ public class userdto {
 	public void setPan(String pan) {
 		this.pan = pan;
 	}
-	
 	
 }
