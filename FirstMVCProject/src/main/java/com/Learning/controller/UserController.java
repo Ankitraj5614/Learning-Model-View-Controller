@@ -3,6 +3,9 @@ package com.Learning.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,28 +31,39 @@ public class UserController {
 		return "home";
 	}
 	
-//	@GetMapping("/register")
-//	public String showRegister(Model model) {
-//		
-//		model.addAttribute("user", new UserDto());
-//		return "register";
-//	}
-//	
+	@GetMapping("/register")
+	public String showRegister(Model model) {
+		
+		model.addAttribute("user", new UserDto());
+	return "register";
+	}
+
 	
-	public String getAllData(Model model, @RequestParam Long id) {}
 	@PostMapping("/save")
 	public String  saveData(@ModelAttribute UserDto userdto) {
 		service.saveUser(userdto);
 		
 		return "redirect:/Alluser";
 	}
+//	@GetMapping("/Alluser")
+//	public String showData(Model model) {
+//		List<UserDto> alluser = service.getAlluser();
+//		model.addAttribute("userlist", alluser);
+//		return "viewAll";
+//	}
 	@GetMapping("/Alluser")
-	public String showData(Model model) {
-		List<UserDto> alluser = service.getAlluser();
-		model.addAttribute("userlist", alluser);
+	public String getAllData(Model model, @RequestParam(defaultValue="0") int pageNo ) {
+		int pageSize =4;
+		if(pageNo<0)
+			pageNo=0;
+		Pageable page= PageRequest.of(pageNo, pageSize);
+		Page<UserDto> page1 = service.getAllPaginationDataUser(page);
+		
+		model.addAttribute("userpage", page1);
+		model.addAttribute("currentpage", pageNo);
 		return "viewAll";
+				
 	}
-	
 //	@GetMapping("/editUser")
 //	public String editing (@RequestParam Long id) {
 //		System.out.println("the method is changed " +id);

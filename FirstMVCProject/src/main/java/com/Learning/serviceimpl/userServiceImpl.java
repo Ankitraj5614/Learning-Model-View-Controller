@@ -1,16 +1,18 @@
 package com.Learning.serviceimpl;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.Learning.Dto.UserDto;
-import com.Learning.config.AppConfig;
+
 
 import com.Learning.entities.User;
 import com.Learning.repo.userRepo;
@@ -82,5 +84,13 @@ public class userServiceImpl implements UserService {
 	
 		return mapper.map(saveEntity, UserDto.class);
 	}
+
+	@Override
+	public Page<UserDto> getAllPaginationDataUser(Pageable pageable) {
+		Page<User> page=repo.findAll(pageable);
+		Page<UserDto> page1=page.map(u -> mapper.map(u, UserDto.class));
+		return page1;
+	}
+	
 
 }
