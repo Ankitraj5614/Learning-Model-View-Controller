@@ -17,6 +17,8 @@ public class User {
 	private String password;
 	private String aadhar;
 	private String pan;
+	private String imageName;
+	private String pdfName;
 	
 	public User() {
 		super();
@@ -74,4 +76,17 @@ public class User {
 	public void setPan(String pan) {
 		this.pan = pan;
 	}
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+	public String getPdfName() {
+		return pdfName;
+	}
+	public void setPdfName(String pdfName) {
+		this.pdfName = pdfName;
+	}
+	
 }

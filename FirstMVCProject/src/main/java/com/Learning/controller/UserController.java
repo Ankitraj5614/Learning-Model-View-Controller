@@ -2,22 +2,29 @@ package com.Learning.controller;
 
 
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.Learning.Dto.UserDto;
-import com.Learning.entities.User;
-import com.Learning.repo.userRepo;
+
 import com.Learning.serviceimpl.userServiceImpl;
+import com.Learning.utils.FileUploadUtils;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
@@ -38,13 +45,56 @@ public class UserController {
 	return "register";
 	}
 
-	
+	//Validation in save method
 	@PostMapping("/save")
-	public String  saveData(@ModelAttribute UserDto userdto) {
-		service.saveUser(userdto);
+	public String  saveData(@Valid @ModelAttribute("user") UserDto userdto, BindingResult result, Model model,
+			@RequestParam("imgpart") MultipartFile imgpart, @RequestParam("pdfpart") MultipartFile pdfpart) {
+		if(result.hasErrors()) {
+			model.addAttribute("user", userdto);
+			return "/register";
+		}
 		
+		
+		//extract original image and pdf file name
+		
+		String imageName= null;
+		String pdfName = null;
+		
+		//extract image name;
+		
+		if(imgpart!=null && !imgpart.isEmpty())
+		{
+			imageName = StringUtils.cleanPath(Objects.requireNonNull(imgpart.getOriginalFilename()));
+			//set imageName to userdto
+			userdto.setImageName(imageName);
+		}
+		if(pdfpart!=null && !pdfpart.isEmpty())
+		{
+			pdfName = StringUtils.cleanPath(Objects.requireNonNull(pdfpart.getOriginalFilename()));
+			//set pdfName to userdto
+			userdto.setPdfName(pdfName);
+		}
+		
+		//save user to database with file names;
+		
+
+		UserDto savedUser=service.saveUser(userdto);
+		
+		try {
+			
+			String uploadDirectory = "myfiles/"+savedUser.getId();//myfiles/2
+			
+			FileUploadUtils.saveFile(uploadDirectory, imageName, imgpart);
+			FileUploadUtils.saveFile(uploadDirectory, pdfName, pdfpart);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "redirect:/Alluser";
 	}
+	
+	
+	
 //	@GetMapping("/Alluser")
 //	public String showData(Model model) {
 //		List<UserDto> alluser = service.getAlluser();
@@ -53,7 +103,7 @@ public class UserController {
 //	}
 	@GetMapping("/Alluser")
 	public String getAllData(Model model, @RequestParam(defaultValue="0") int pageNo ) {
-		int pageSize =4;
+		int pageSize =3;
 		if(pageNo<0)
 			pageNo=0;
 		Pageable page= PageRequest.of(pageNo, pageSize);

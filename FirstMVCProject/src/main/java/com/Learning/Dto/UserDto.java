@@ -1,13 +1,28 @@
 package com.Learning.Dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 public class UserDto {
 	private Long id;
+	@NotBlank(message="Enter The Name")
 	private String name;
+	@NotBlank(message="Enter The Email")
 	private String email;
+	@NotBlank(message="Enter The Address")
 	private String address;
+	@NotBlank(message="Enter The Valid password")
+	@Pattern(  regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$",
+		    message = "Password must contain uppercase, lowercase, number, special character and be at least 8 characters"
+			)
 	private String password;
+	@NotBlank(message="Enter The aadhar Number")
 	private String aadhar;
+	@NotBlank(message="Enter The pan Number")
 	private String pan;
+	private String imageName;
+	private String pdfName;
+	
 	
 	public UserDto(Long id, String name, String email, String address, String password, String aadhar, String pan) {
 		super();
@@ -64,6 +79,18 @@ public class UserDto {
 	}
 	public void setPan(String pan) {
 		this.pan = pan;
+	}
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
+	public String getPdfName() {
+		return pdfName;
+	}
+	public void setPdfName(String pdfName) {
+		this.pdfName = pdfName;
 	}
 	
 }
