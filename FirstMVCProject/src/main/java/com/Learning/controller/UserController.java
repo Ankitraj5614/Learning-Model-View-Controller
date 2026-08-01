@@ -2,6 +2,9 @@ package com.Learning.controller;
 
 
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,7 @@ import com.Learning.Dto.UserDto;
 import com.Learning.serviceimpl.userServiceImpl;
 import com.Learning.utils.FileUploadUtils;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @Controller
@@ -138,5 +142,22 @@ public class UserController {
 			service.updateUser(userdto);
 
 		return "redirect:/Alluser";
+	}
+
+	@GetMapping("/download/{userid}/{filename}")
+	public void downloadDocs(@PathVariable String userid, @PathVariable String filename, HttpServletResponse resp) {
+		try {
+			Path filePath = Paths.get("myfiles", userid, filename);
+			
+			//set headet and content type to resp object
+			resp.setContentType("application/pdf");
+			resp.setHeader("Content-Disposition","attachment;filename=\""+ filename+"\"");
+			
+			Files.copy(filePath, resp.getOutputStream());
+			resp.getOutputStream().flush();
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 }

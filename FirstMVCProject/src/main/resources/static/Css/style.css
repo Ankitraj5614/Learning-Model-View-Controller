@@ -138,3 +138,75 @@ body{
     width:100%;
 }
 }
+.btn-warning{
+    background:#ffc107;
+    border:none;
+}
+
+.btn-danger{
+    background:#dc3545;
+    border:none;
+}
+
+.btn-info{
+    background:#0dcaf0;
+    border:none;
+}
+
+.btn-warning:hover{
+    background:#ffb300;
+}
+
+.btn-danger:hover{
+    background:#bb2d3b;
+}
+
+.btn-info:hover{
+    background:#0aa2c0;
+}
+body{
+    background:#f4f7fb;
+}
+
+.card{
+    border-radius:15px;
+}
+
+.table{
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.table thead{
+    background:#212529;
+    color:white;
+}
+
+.table tbody tr{
+    transition:.3s;
+}
+
+.table tbody tr:hover{
+    background:#f8f9fa;
+    transform:scale(1.01);
+}
+
+.btn{
+    border-radius:25px;
+    transition:.3s;
+    font-weight:600;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+}
+
+.form-control{
+    border-radius:30px;
+    padding:12px 20px;
+}
+
+.card-header{
+    border-radius:15px 15px 0 0;
+}

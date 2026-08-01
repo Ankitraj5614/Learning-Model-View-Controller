@@ -5,100 +5,90 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
 	<section>
-		<h1>Welcome View All</h1>
 		
 		<div >
-		<div class="container mt-4">
+		<div class="container mt-5">
 
-    <div class="row">
-        <div class="col-md-6 offset-3">
-        	
-			<table class="table">
-  <thead>
-    <tr>
-      
-      <th scope="col">Name</th>
-      <th scope="col">email</th>
-     
-      <th scope="col">pan</th>
-      <th scope="col">address</th>
-      <th scope="col">aadhar</th>
-      <th scope="col">action</th>
+    <div class="card shadow-lg border-0">
 
-   </tr>
-  </thead>
-  <tbody>
-    <tr th:each="u:${userpage.content}">
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0">User Management</h3>
+        </div>
 
-     
-      <td th:text="${u.name}">Mark</td>
-      <td th:text="${u.email}">Otto</td>
-    
-      <td th:text="${u.pan}">@mdo</td>
-      <td th:text="${u.address}">@mdo</td>
-      <td th:text="${u.aadhar}">@mdo</td>
-<!--  query parameter approach    <td><a class="btn btn-warning"  th:href="@{/editUser(id=${u.id})}">edit</a> --> 
-  <!-- 2nd approach   <td><a class="btn btn-warning"  th:href="@{|/editUser?id=${u.id}|}">edit</a> -->
-<!-- 3rd approach  <td><a class="btn btn-warning"  th:href="@{'/editUser?id='+${u.id}|}">edit</a> --> 
-<!--  path varible  -->
- <!-- <td> <a class="btn btn-warning"  th:href="@{/editUser/{id}(id=${u.id})|}">edit</a> --> 
-<!--  <td> <a class="btn btn-warning"  th:href="@{|/editUser/${u.id}|}">edit</a>  -->
- <td> <a class="btn btn-warning"  th:href="@{'/editUser/' + ${u.id}}">edit</a>
-     
-      <a   class="btn btn-danger" th:href="@{'/delete/' + ${u.id}}">Delete</a>
-      </td>
-     
-    </tr>
-   
-  </tbody>
-</table>
-<nav>
-    <ul class="pagination">
+        <div class="card-body">
 
-        <li class="page-item"
-            th:classappend="${userpage.first} ? 'disabled'">
+            <input type="text"
+                   id="search"
+                   class="form-control mb-4"
+                   placeholder="Search User...">
 
-            <a class="page-link"
-               th:href="@{'/Alluser?pageNo=' + ${currentpage-1}}">
-                Previous
-            </a>
+            <div class="table-responsive">
 
-        </li>
+                <table class="table table-hover align-middle">
 
-        <li class="page-item"
-            th:each="i : ${#numbers.sequence(0,userpage.totalPages-1)}"
-            th:classappend="${i==currentpage} ? 'active'">
+                    <thead class="table-dark">
 
-            <a class="page-link"
-               th:text="${i+1}"
-               th:href="@{'/Alluser?pageNo=' + ${i}}">
-            </a>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>PAN</th>
+                        <th>Address</th>
+                        <th>Aadhar</th>
+                        <th width="320">Action</th>
+                    </tr>
 
-        </li>
+                    </thead>
 
-        <li class="page-item"
-            th:classappend="${userpage.last} ? 'disabled'">
+                    <tbody id="tableBody">
 
-            <a class="page-link"
-               th:href="@{'/Alluser?pageNo=' + ${currentpage+1}}">
-                Next
-            </a>
+                    <tr th:each="user:${userpage.content}">
 
-        </li>
+                        <td th:text="${user.name}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.pan}"></td>
+                        <td th:text="${user.address}"></td>
+                        <td th:text="${user.aadhar}"></td>
 
-    </ul>
-</nav>
+                        <td>
+
+                            <a th:href="@{/edit/{id}(id=${user.id})}"
+                               class="btn btn-warning btn-sm me-2">
+                                ✏ Edit
+                            </a>
+
+                            <a th:href="@{/delete/{id}(id=${user.id})}"
+                               class="btn btn-danger btn-sm me-2 deleteBtn">
+                                🗑 Delete
+                            </a>
+
+                            <a th:href="@{/download/{id}(id=${user.id})}"
+                               class="btn btn-info btn-sm text-white">
+                                ⬇ Download
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
-        </div>
-       </div>
+
+    </div>
+
+</div>
 				</div>
 
 </section>
-
+<script th:src="@{/js/script.js}"></script>
 </body>
 </html>
