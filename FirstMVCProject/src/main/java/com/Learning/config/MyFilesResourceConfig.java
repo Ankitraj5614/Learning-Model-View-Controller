@@ -8,9 +8,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class MyFilesResourceConfig implements WebMvcConfigurer {
+public class MyFilesResourceConfig implements  WebMvcConfigurer  {
 
 	private static final String UPLOAD_DIR="myfiles";
+	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		Path path = Paths.get(UPLOAD_DIR);

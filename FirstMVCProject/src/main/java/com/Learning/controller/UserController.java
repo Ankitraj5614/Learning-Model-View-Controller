@@ -41,60 +41,56 @@ public class UserController {
 	@GetMapping("/register")
 	public String showRegister(Model model) {
 		
-		model.addAttribute("user", new UserDto());
+		model.addAttribute("userdto", new UserDto());
 	return "register";
 	}
 
 	//Validation in save method
+
 	@PostMapping("/save")
-	public String  saveData(@Valid @ModelAttribute("user") UserDto userdto, BindingResult result, Model model,
+	public String saveUser(@Valid @ModelAttribute("userdto") UserDto userdto, BindingResult result, Model model,
 			@RequestParam("imgpart") MultipartFile imgpart, @RequestParam("pdfpart") MultipartFile pdfpart) {
-		if(result.hasErrors()) {
-			model.addAttribute("user", userdto);
-			return "/register";
+
+		if (result.hasErrors()) {
+			System.out.println("error occured!!");
+			model.addAttribute("userdto", userdto);
+			return "register";
 		}
-		
-		
-		//extract original image and pdf file name
-		
-		String imageName= null;
+
+		// extract orginal image and pdf file name
+		String imageName = null;
 		String pdfName = null;
-		
-		//extract image name;
-		
-		if(imgpart!=null && !imgpart.isEmpty())
-		{
+
+		// extract image name
+		if (imgpart != null && !imgpart.isEmpty()) {
 			imageName = StringUtils.cleanPath(Objects.requireNonNull(imgpart.getOriginalFilename()));
-			//set imageName to userdto
+			// set imagename to userDto
 			userdto.setImageName(imageName);
 		}
-		if(pdfpart!=null && !pdfpart.isEmpty())
-		{
+
+		// extract pdf name
+		if (pdfpart != null && !pdfpart.isEmpty()) {
 			pdfName = StringUtils.cleanPath(Objects.requireNonNull(pdfpart.getOriginalFilename()));
-			//set pdfName to userdto
+			// set pdfname to userdto
 			userdto.setPdfName(pdfName);
 		}
-		
-		//save user to database with file names;
-		
 
-		UserDto savedUser=service.saveUser(userdto);
-		
+		// save user to database with file names
+		UserDto savedUser = service.saveUser(userdto);
+
+		// now save file in directory/folder
 		try {
-			
-			String uploadDirectory = "myfiles/"+savedUser.getId();//myfiles/2
-			
+			String uploadDirectory = "myfiles/" + savedUser.getId();// myfiles/2
 			FileUploadUtils.saveFile(uploadDirectory, imageName, imgpart);
+
 			FileUploadUtils.saveFile(uploadDirectory, pdfName, pdfpart);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return "redirect:/Alluser";
-	}
-	
-	
-	
+	}	
 //	@GetMapping("/Alluser")
 //	public String showData(Model model) {
 //		List<UserDto> alluser = service.getAlluser();
@@ -140,9 +136,7 @@ public class UserController {
 	
 		
 			service.updateUser(userdto);
-	
-		
-		
+
 		return "redirect:/Alluser";
 	}
 }
